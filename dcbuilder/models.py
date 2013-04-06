@@ -64,6 +64,11 @@ class Application(models.Model):
     def __unicode__(self):
         return self.name
 
+class Customer(models.Model):
+    name = models.CharField('Customer Name', max_length=100, help_text="What is the customer's name?")
+    def __unicode__(self):
+        return self.name
+
 class Environment(models.Model):
     name = models.CharField('Environment Name', max_length=100, help_text="Select a name for this environment")
     space = models.ForeignKey(Space, verbose_name="Linked Space", blank=True, null=True)
@@ -76,5 +81,14 @@ class Environment(models.Model):
     server = models.ForeignKey(Server, verbose_name="Linked Server", blank=True, null=True)
     storage = models.ForeignKey(Storage, verbose_name="Linked Storage", blank=True, null=True)
     application = models.ForeignKey(Application, verbose_name="Linked App", blank=True, null=True)
+    def __unicode__(self):
+        return self.name
+
+class Proposal(models.Model):
+    name = models.CharField('Proposal Name', max_length=100, help_text="Select a name for this proposal")
+    detail = models.CharField('Proposal Detail', max_length=100, help_text="Describe Environment")
+    customer = models.ForeignKey(Customer, verbose_name="Customer", blank=True, null=True)
+    environment = models.ForeignKey(Environment, verbose_name="Environment", blank=True, null=True)
+
     def __unicode__(self):
         return self.name
